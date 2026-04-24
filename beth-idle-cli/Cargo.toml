@@ -1,0 +1,11 @@
+[package]
+name = "beth-idle-cli"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+beth-idle = { path = "..", default-features = false }
+
+clap = { version = "4.5.53", features = ["derive"] }
+humantime = "2.1.0"

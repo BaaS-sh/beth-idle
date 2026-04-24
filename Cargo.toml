@@ -1,0 +1,32 @@
+[package]
+name = "beth-idle"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[workspace]
+resolver = "2"
+members = ["beth-idle-reth", "beth-idle-cli"]
+
+[dependencies]
+tracing = "0.1.40"
+
+eyre = { version = "0.6.12", optional = true }
+uuid = { version = "1.11.0", optional = true, features = ["v4", "fast-rng"] }
+
+reqwest = { version = "0.11.27", default-features = false, features = ["rustls-tls"], optional = true }
+gcp_auth = { version = "0.12.6", optional = true }
+tokio = { version = "1.38", default-features = false, features = ["rt", "time", "macros"], optional = true }
+
+[features]
+default = []
+gce-sdk = ["dep:eyre", "dep:uuid", "dep:reqwest", "dep:gcp_auth", "dep:tokio"]
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+debug = false
+strip = "symbols"
+panic = "abort"
+codegen-units = 1
+incremental = false
