@@ -6,7 +6,7 @@ use clap::Args;
 
 #[derive(Debug, Clone, Args)]
 pub struct IdleCliArgs {
-    /// Idle timer before triggering a graceful shutdown and suspending the VM.
+    /// Idle timer before suspending the VM.
     ///
     /// Examples: `5m`, `300s`, `1h`.
     ///
@@ -37,4 +37,3 @@ impl IdleCliArgs {
         Ok(Some(self.to_config()?))
     }
 }
-

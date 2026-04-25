@@ -9,9 +9,12 @@ beth-idle = { path = "..", default-features = false }
 
 uuid = { version = "1.11.0", optional = true, features = ["v4", "fast-rng"] }
 eyre = { version = "0.6.12", optional = true }
-tokio = { version = "1.38", features = ["rt", "time", "sync"], optional = true }
+tokio = { version = "1.38", features = ["rt", "time", "sync", "macros"], optional = true }
 tokio-util = { version = "0.7", optional = true }
 tracing = { version = "0.1.40", optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.38", features = ["rt", "time", "sync", "macros", "test-util"] }
 
 [features]
 default = []

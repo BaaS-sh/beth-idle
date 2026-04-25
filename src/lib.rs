@@ -33,7 +33,3 @@ impl Default for IdleConfig {
 
 #[cfg(feature = "gce-sdk")]
 pub mod gce;
-
-#[cfg(feature = "gce-sdk")]
-mod retry;
-
