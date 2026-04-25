@@ -83,14 +83,21 @@ async fn suspend_instance(
         "beth-idle: calling Compute Engine instances.suspend"
     );
 
-    client
+    // Best-practice (and matches GCP docs): only send `discardLocalSsd` when discarding. Preserving
+    // Local SSD data via `discardLocalSsd=false` is a preview feature on the beta endpoint, and we
+    // don't need it for Ultra (no Local SSD).
+    let mut call = client
         .suspend()
         .set_project(identity.project_id.clone())
         .set_zone(identity.zone.clone())
         .set_instance(identity.instance_name.clone())
-        .set_request_id(request_id.to_string())
-        .set_discard_local_ssd(discard_local_ssd)
-        .poller()
+        .set_request_id(request_id.to_string());
+
+    if discard_local_ssd {
+        call = call.set_discard_local_ssd(true);
+    }
+
+    call.poller()
         .until_done()
         .await
         .wrap_err("Compute Engine instances.suspend operation failed")?;
